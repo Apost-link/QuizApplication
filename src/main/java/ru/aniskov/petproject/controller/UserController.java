@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.aniskov.petproject.db.DBFormer;
-import ru.aniskov.petproject.pojo.QuizUser;
+import ru.aniskov.petproject.pojo.model.QuizUser;
 
 import java.util.Optional;
 
@@ -14,10 +14,11 @@ public class UserController {
 
     private static Logger _log = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
     private DBFormer db;
 
-    public UserController(){
+    @Autowired
+    public UserController(DBFormer db) {
+        this.db = db;
     }
 
     @GetMapping("/user/{id}")

@@ -1,7 +1,9 @@
 package ru.aniskov.petproject.db;
 
-import ru.aniskov.petproject.pojo.Quiz;
-import ru.aniskov.petproject.pojo.QuizUser;
+import ru.aniskov.petproject.exception.IllegalParametersException;
+import ru.aniskov.petproject.pojo.model.Quiz;
+import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.pojo.model.SetInfo;
 
 import java.util.Optional;
 
@@ -19,4 +21,6 @@ public interface DBFormer {
     Iterable<QuizUser> findUserAll();
 
     QuizUser saveUser(QuizUser quizUser);
+
+    SetInfo findSetInfo(long setId) throws IllegalParametersException;
 }

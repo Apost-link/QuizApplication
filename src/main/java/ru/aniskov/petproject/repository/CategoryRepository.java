@@ -1,7 +1,7 @@
 package ru.aniskov.petproject.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.aniskov.petproject.pojo.Category;
+import ru.aniskov.petproject.pojo.model.Category;
 
 public interface CategoryRepository extends CrudRepository<Category, Long> {
 }

@@ -1,9 +1,9 @@
-package ru.aniskov.petproject.pojo;
+package ru.aniskov.petproject.pojo.model;
 
 import javax.persistence.*;
 
 @Entity
-public class Сolloquium {
+public class Colloquium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,10 +15,10 @@ public class Сolloquium {
     @Column(nullable = false)
     private long quizId;
 
-    public Сolloquium() {
+    public Colloquium() {
     }
 
-    public Сolloquium(long setId, long quizId) {
+    public Colloquium(long setId, long quizId) {
         this.setId = setId;
         this.quizId = quizId;
     }

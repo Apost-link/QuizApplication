@@ -1,6 +1,7 @@
-package ru.aniskov.petproject.pojo;
+package ru.aniskov.petproject.pojo.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class QuizUser {
@@ -11,6 +12,9 @@ public class QuizUser {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private Date registrerDate;
 
     public QuizUser() {
     }
@@ -33,5 +37,13 @@ public class QuizUser {
 
     public String getName() {
         return name;
+    }
+
+    public Date getRegistrerDate() {
+        return registrerDate;
+    }
+
+    public void setRegistrerDate(Date registrerDate) {
+        this.registrerDate = registrerDate;
     }
 }

@@ -1,11 +1,16 @@
 package ru.aniskov.petproject.db;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.aniskov.petproject.pojo.Quiz;
-import ru.aniskov.petproject.pojo.QuizUser;
+import ru.aniskov.petproject.exception.IllegalParametersException;
+import ru.aniskov.petproject.pojo.model.*;
 import ru.aniskov.petproject.repository.*;
 
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -20,6 +25,8 @@ public class DBFormerImpl implements DBFormer{
     private ColloquiumRepository colloquiumRepository;
 
     private UserRepository userRepository;
+
+    private static Logger _log = LoggerFactory.getLogger(DBFormerImpl.class);
 
     @Autowired
     public DBFormerImpl(QuizRepository quizRepository, CategoryRepository categoryRepository, SetRepository setRepository, ColloquiumRepository colloquiumRepository, UserRepository userRepository) {
@@ -62,6 +69,23 @@ public class DBFormerImpl implements DBFormer{
 
     @Override
     public QuizUser saveUser(QuizUser quizUser) {
+        quizUser.setRegistrerDate(new Date());
         return userRepository.save(quizUser);
+    }
+
+    @Override
+    public SetInfo findSetInfo(long setId) throws IllegalParametersException {
+        Optional<Set> set = setRepository.findById(setId);
+        if(set.isPresent()){
+            Iterable<Colloquium> colloquiums = colloquiumRepository.findBySetId(setId);
+            List<Quiz> quizList = new LinkedList<>();
+            for(Colloquium colloquium: colloquiums){
+                Optional<Quiz> quiz = quizRepository.findById(colloquium.getQuizId());                                  //Todo: create join request instead of two select
+                quiz.ifPresent(quizList::add);
+            }
+            return new SetInfo(set.get(), quizList);
+        } else {
+            throw new IllegalParametersException();
+        }
     }
 }

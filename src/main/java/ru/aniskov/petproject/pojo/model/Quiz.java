@@ -1,4 +1,4 @@
-package ru.aniskov.petproject.pojo;
+package ru.aniskov.petproject.pojo.model;
 
 import javax.persistence.*;
 
