@@ -10,23 +10,4 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserControllerTest {
-
-    private TestDataObject data;
-
-    @BeforeEach
-    void init(){
-        data = new TestDataObject();
-    }
-
-    @Test
-    void getUser() {
-    }
-
-    @Test
-    void getAllUser() {
-    }
-
-    @Test
-    void postUser() {
-    }
 }

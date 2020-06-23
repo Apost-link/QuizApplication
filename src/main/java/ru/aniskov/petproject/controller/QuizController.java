@@ -1,4 +1,4 @@
-package ru.aniskov.petproject;
+package ru.aniskov.petproject.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +8,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.aniskov.petproject.db.DBFormer;
+import ru.aniskov.petproject.exception.IllegalParametersException;
+import ru.aniskov.petproject.configuration.TestConfig;
 import ru.aniskov.petproject.pojo.Quiz;
 
 import java.util.Optional;
