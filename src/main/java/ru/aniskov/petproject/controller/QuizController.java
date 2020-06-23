@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.DBFormer;
 import ru.aniskov.petproject.exception.IllegalParametersException;
 import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.model.SetInfo;
+import ru.aniskov.petproject.pojo.SetInfo;
 
 import java.util.Optional;
 
@@ -65,5 +65,4 @@ public class QuizController {
         }
         return result;
     }
-
 }

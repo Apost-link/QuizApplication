@@ -1,4 +1,7 @@
-package ru.aniskov.petproject.pojo.model;
+package ru.aniskov.petproject.pojo;
+
+import ru.aniskov.petproject.pojo.model.Quiz;
+import ru.aniskov.petproject.pojo.model.Set;
 
 import java.util.List;
 

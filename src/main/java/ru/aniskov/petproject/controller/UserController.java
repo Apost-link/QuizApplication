@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.aniskov.petproject.db.DBFormer;
+import ru.aniskov.petproject.pojo.model.PassedSetLog;
 import ru.aniskov.petproject.pojo.model.QuizUser;
 
 import java.util.Optional;
@@ -29,6 +30,11 @@ public class UserController {
     @GetMapping("/user/all")
     public Iterable<QuizUser> getAllUser(){
         return db.findUserAll();
+    }
+
+    @GetMapping("/user/{userId}/passed_sets")
+    public Iterable<PassedSetLog> getUserPassedSets(@PathVariable long userId){
+        return db.findPassedSetsByUserId(userId);
     }
 
     @PostMapping("/user/new")

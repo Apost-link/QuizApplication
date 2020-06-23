@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.exception.IllegalParametersException;
+import ru.aniskov.petproject.pojo.SetInfo;
 import ru.aniskov.petproject.pojo.model.*;
 import ru.aniskov.petproject.repository.*;
 
@@ -26,15 +27,18 @@ public class DBFormerImpl implements DBFormer{
 
     private UserRepository userRepository;
 
+    private PassedSetLogRepository passedSetLogRepository;
+
     private static Logger _log = LoggerFactory.getLogger(DBFormerImpl.class);
 
     @Autowired
-    public DBFormerImpl(QuizRepository quizRepository, CategoryRepository categoryRepository, SetRepository setRepository, ColloquiumRepository colloquiumRepository, UserRepository userRepository) {
+    public DBFormerImpl(QuizRepository quizRepository, CategoryRepository categoryRepository, SetRepository setRepository, ColloquiumRepository colloquiumRepository, UserRepository userRepository, PassedSetLogRepository passedSetLogRepository) {
         this.quizRepository = quizRepository;
         this.categoryRepository = categoryRepository;
         this.setRepository = setRepository;
         this.colloquiumRepository = colloquiumRepository;
         this.userRepository = userRepository;
+        this.passedSetLogRepository = passedSetLogRepository;
     }
 
     @Override
@@ -87,5 +91,16 @@ public class DBFormerImpl implements DBFormer{
         } else {
             throw new IllegalParametersException();
         }
+    }
+
+    @Override
+    public Iterable<PassedSetLog> findPassedSetsByUserId(long userId) {
+        return passedSetLogRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public PassedSetLog savePassedSetLog(PassedSetLog passedSetLog) {
+        passedSetLog.setDate(new Date());
+        return passedSetLogRepository.save(passedSetLog);
     }
 }
