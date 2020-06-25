@@ -14,6 +14,7 @@ import ru.aniskov.petproject.pojo.SetInfo;
 import java.util.Optional;
 
 @RestController()
+@RequestMapping(path = "${v1API}/quiz")
 public class QuizController {
 
     private static Logger _log = LoggerFactory.getLogger(QuizController.class);
@@ -25,22 +26,22 @@ public class QuizController {
         this.db = dbFormer;
     }
 
-    @GetMapping("/quiz/all")
+    @GetMapping("/all")
     public Iterable<Quiz> getQuizAll() {
         return db.findQuizAll();
     }
 
-    @GetMapping("/quiz/{id}")
+    @GetMapping("/{id}")
     public Optional<Quiz> getQuizById(@PathVariable long id){
         return db.findQuizById(id);
     }
 
-    @GetMapping("/quiz/category/{category}")
+    @GetMapping("/category/{category}")
     public Iterable<Quiz> getQuizByCategory(@PathVariable long category){
         return db.findQuizByCategory(category);
     }
 
-    @GetMapping("/quiz/set/{id}")
+    @GetMapping("/set/{id}")
     public SetInfo getSetInfobyId(@PathVariable long id){
         try{
             return db.findSetInfo(id);
@@ -50,7 +51,7 @@ public class QuizController {
         }
     }
 
-    @PostMapping("/quiz/new")
+    @PostMapping("/new")
     public Quiz postQuizNew(@RequestParam(value = "category", defaultValue = "0") Integer category, @RequestParam(value = "question") String question, @RequestParam(value = "answer") String answer) {
         Quiz result;
         try {

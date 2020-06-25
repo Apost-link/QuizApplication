@@ -11,6 +11,7 @@ import ru.aniskov.petproject.pojo.model.QuizUser;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(path = "${v1API}/user")
 public class UserController {
 
     private static Logger _log = LoggerFactory.getLogger(UserController.class);
@@ -22,22 +23,22 @@ public class UserController {
         this.db = db;
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public Optional<QuizUser> getUser(@PathVariable long id){
         return db.findUserById(id);
     }
 
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     public Iterable<QuizUser> getAllUser(){
         return db.findUserAll();
     }
 
-    @GetMapping("/user/{userId}/passed_sets")
+    @GetMapping("/{userId}/passed_sets")
     public Iterable<PassedSetLog> getUserPassedSets(@PathVariable long userId){
         return db.findPassedSetsByUserId(userId);
     }
 
-    @PostMapping("/user/new")
+    @PostMapping("/new")
     public QuizUser postUser(@RequestParam(value="name") String name){
         return db.saveUser(new QuizUser(name));
     }
