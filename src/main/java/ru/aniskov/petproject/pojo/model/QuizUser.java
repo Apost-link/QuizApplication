@@ -14,6 +14,9 @@ public class QuizUser {
     private String name;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private Date registrerDate;
 
     public QuizUser() {
@@ -45,5 +48,13 @@ public class QuizUser {
 
     public void setRegistrerDate(Date registrerDate) {
         this.registrerDate = registrerDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -42,7 +42,7 @@ public class QuizController {
     }
 
     @GetMapping("/set/{id}")
-    public SetInfo getSetInfobyId(@PathVariable long id){
+    public SetInfo getSetInfoById(@PathVariable long id){
         try{
             return db.findSetInfo(id);
         }catch (IllegalParametersException e){
