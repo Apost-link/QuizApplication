@@ -3,6 +3,7 @@ package ru.aniskov.petproject.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.aniskov.petproject.db.DBFormer;
 import ru.aniskov.petproject.pojo.model.PassedSetLog;
@@ -39,8 +40,8 @@ public class UserController {
     }
 
     @PostMapping("/new")
-    public QuizUser postUser(@RequestParam(value="name") String name){
-        return db.saveUser(new QuizUser(name));
+    public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role){
+        return db.saveUser(new QuizUser(name, role));
     }
 
 }

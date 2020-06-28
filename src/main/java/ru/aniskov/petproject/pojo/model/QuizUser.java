@@ -17,6 +17,9 @@ public class QuizUser {
     private String password;
 
     @Column(nullable = false)
+    private String role;
+
+    @Column(nullable = false)
     private Date registrerDate;
 
     public QuizUser() {
@@ -24,30 +27,28 @@ public class QuizUser {
 
     public QuizUser(String name){
         this.name = name;
+        this.role = Role.USER.getValue();
+    }
+
+    public QuizUser(String name, String role){
+        this.name = name;
+        this.role = Role.getRole(role).getValue();
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public long getId() {
         return id;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
-    }
-
-    public Date getRegistrerDate() {
-        return registrerDate;
-    }
-
-    public void setRegistrerDate(Date registrerDate) {
-        this.registrerDate = registrerDate;
     }
 
     public String getPassword() {
@@ -56,5 +57,21 @@ public class QuizUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Date getRegistrerDate() {
+        return registrerDate;
+    }
+
+    public void setRegistrerDate(Date registrerDate) {
+        this.registrerDate = registrerDate;
     }
 }

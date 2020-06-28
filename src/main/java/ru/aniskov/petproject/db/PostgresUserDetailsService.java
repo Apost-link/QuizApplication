@@ -16,18 +16,22 @@ import java.util.List;
 @Component
 public class PostgresUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private UserRepository repository;
+
+    @Autowired
+    public PostgresUserDetailsService(UserRepository userRepository){
+        this.repository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QuizUser user =repository.findByName(username);
+        QuizUser user = repository.findByName(username);
 
         if(user == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("user"));
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
 
         return new User(user.getName(), user.getPassword(), authorities);
     }

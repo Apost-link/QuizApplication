@@ -10,19 +10,27 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.aniskov.petproject.db.PostgresUserDetailsService;
+import ru.aniskov.petproject.pojo.model.Role;
 
 @Configuration
 @EnableConfigurationProperties
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     PostgresUserDetailsService userDetailsService;
+
+    @Autowired
+    public WebSecurityConfig(PostgresUserDetailsService userDetailsService){
+        super();
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/api/v1/user/**").hasAnyAuthority(Role.ADMIN.getValue())
+                .and().authorizeRequests().antMatchers("/api/v1/quiz/**").authenticated()
+                .and().authorizeRequests().antMatchers("/api/v1/sets/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().disable();
     }
