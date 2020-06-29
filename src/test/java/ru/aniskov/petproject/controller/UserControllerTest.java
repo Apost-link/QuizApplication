@@ -1,4 +1,4 @@
-package ru.aniskov.petproject;
+package ru.aniskov.petproject.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

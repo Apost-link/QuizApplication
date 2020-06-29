@@ -3,8 +3,9 @@ package ru.aniskov.petproject.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.DBFormer;
 import ru.aniskov.petproject.pojo.model.PassedSetLog;
 import ru.aniskov.petproject.pojo.model.QuizUser;
@@ -26,7 +27,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Optional<QuizUser> getUser(@PathVariable long id){
-        return db.findUserById(id);
+        Optional<QuizUser> user = db.findUserById(id);
+        if(user.isPresent()){
+            return user;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id = " + id + " not found");
+        }
     }
 
     @GetMapping("/all")
@@ -40,8 +46,8 @@ public class UserController {
     }
 
     @PostMapping("/new")
-    public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role){
-        return db.saveUser(new QuizUser(name, role));
+    public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role, @RequestParam(value="password") String password){
+        return db.saveUser(new QuizUser(name, password, role));
     }
 
 }

@@ -1,5 +1,7 @@
 package ru.aniskov.petproject.pojo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class QuizUser {
     @Column(nullable = false)
     private String name;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -30,8 +33,9 @@ public class QuizUser {
         this.role = Role.USER.getValue();
     }
 
-    public QuizUser(String name, String role){
+    public QuizUser(String name, String password, String role){
         this.name = name;
+        this.password = password;
         this.role = Role.getRole(role).getValue();
     }
 
