@@ -8,14 +8,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 import ru.aniskov.petproject.pojo.model.Quote;
 
 @Configuration
 @EnableScheduling
-public class TestConfig {
+public class BeanConfiguration {
 
-    private Logger _log = LoggerFactory.getLogger(TestConfig.class);
+    private Logger _log = LoggerFactory.getLogger(BeanConfiguration.class);
 
     @Bean
     @Lazy
@@ -35,5 +37,10 @@ public class TestConfig {
     @Bean
     public RestTemplateBuilder restTemplateBuilder(){
         return new RestTemplateBuilder();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

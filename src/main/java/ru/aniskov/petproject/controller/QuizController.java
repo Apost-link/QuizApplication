@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.aniskov.petproject.db.DBFormer;
-import ru.aniskov.petproject.exception.IllegalParametersException;
+import ru.aniskov.petproject.db.service.QuizService;
 import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.SetInfo;
 
 import java.util.Optional;
 
@@ -19,50 +17,36 @@ public class QuizController {
 
     private static Logger _log = LoggerFactory.getLogger(QuizController.class);
 
-    private DBFormer db;
+    private QuizService service;
 
     @Autowired
-    public QuizController(DBFormer dbFormer) {
-        this.db = dbFormer;
+    public QuizController(QuizService service) {
+        this.service = service;
     }
 
     @GetMapping("/all")
     public Iterable<Quiz> getQuizAll() {
-        return db.findQuizAll();
+        return service.findQuizAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Quiz> getQuizById(@PathVariable long id){
-        return db.findQuizById(id);
+    public Optional<Quiz> getQuizById(@PathVariable long id) {
+        return service.findQuizById(id);
     }
 
     @GetMapping("/category/{category}")
-    public Iterable<Quiz> getQuizByCategory(@PathVariable long category){
-        return db.findQuizByCategory(category);
-    }
-
-    @GetMapping("/set/{id}")
-    public SetInfo getSetInfoById(@PathVariable long id){
-        try{
-            return db.findSetInfo(id);
-        }catch (IllegalParametersException e){
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Bad parameters", e);
-        }
+    public Iterable<Quiz> getQuizByCategory(@PathVariable long category) {
+        return service.findQuizByCategory(category);
     }
 
     @PostMapping("/new")
     public Quiz postQuizNew(@RequestParam(value = "category", defaultValue = "0") Integer category, @RequestParam(value = "question") String question, @RequestParam(value = "answer") String answer) {
         Quiz result;
-        try {
-            if(question == null || answer == null){
-                throw new IllegalParametersException();
-            }else{
-                result = db.saveQuiz(new Quiz(category, question, answer));
-            }
-        } catch (IllegalParametersException e) {
+        if (question == null || answer == null) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Bad parameters", e);
+                    HttpStatus.BAD_REQUEST, "Bad parameters");
+        } else {
+            result = service.saveQuiz(new Quiz(category, question, answer));
         }
         return result;
     }

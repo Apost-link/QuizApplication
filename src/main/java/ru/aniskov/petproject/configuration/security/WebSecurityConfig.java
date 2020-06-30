@@ -1,26 +1,24 @@
-package ru.aniskov.petproject.configuration;
+package ru.aniskov.petproject.configuration.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.aniskov.petproject.db.PostgresUserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.aniskov.petproject.pojo.model.Role;
 
 @Configuration
 @EnableConfigurationProperties
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    PostgresUserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(PostgresUserDetailsService userDetailsService){
+    public WebSecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService){
         super();
         this.userDetailsService = userDetailsService;
     }
@@ -36,11 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers(HttpMethod.GET, "/api/v1/sets/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().disable();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Override

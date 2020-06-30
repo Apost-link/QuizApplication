@@ -13,7 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.aniskov.petproject.db.DBFormer;
+import ru.aniskov.petproject.db.repository.UserRepository;
+import ru.aniskov.petproject.db.service.UserService;
 import ru.aniskov.petproject.pojo.model.QuizUser;
 
 import java.util.Date;
@@ -36,7 +37,7 @@ public class UserRepositoryTest {
     private UserRepository repository;
 
     @Autowired
-    private DBFormer db;
+    private UserService service;
 
     private QuizUser admin;
 
@@ -62,7 +63,7 @@ public class UserRepositoryTest {
     @Test
     public void whenFindByName_thenReturnUserTest(){
         String name = "asdasd";
-        Optional<QuizUser> found = db.findUserByName(name);
+        Optional<QuizUser> found = service.findUserByName(name);
 
         assertThat(found.get().getName())
                 .isEqualTo(name);

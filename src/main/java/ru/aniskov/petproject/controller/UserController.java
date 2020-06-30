@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.aniskov.petproject.db.DBFormer;
-import ru.aniskov.petproject.pojo.model.PassedSetLog;
+import ru.aniskov.petproject.db.service.UserService;
 import ru.aniskov.petproject.pojo.model.QuizUser;
 import ru.aniskov.petproject.pojo.model.Role;
 
@@ -20,16 +19,16 @@ public class UserController {
 
     private static Logger _log = LoggerFactory.getLogger(UserController.class);
 
-    private DBFormer db;
+    private UserService service;
 
     @Autowired
-    public UserController(DBFormer db) {
-        this.db = db;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
     @GetMapping("/{id}")
     public Optional<QuizUser> getUser(@PathVariable long id){
-        Optional<QuizUser> user = db.findUserById(id);
+        Optional<QuizUser> user = service.findUserById(id);
         if(user.isPresent()){
             return user;
         } else {
@@ -39,25 +38,20 @@ public class UserController {
 
     @GetMapping("/all")
     public Iterable<QuizUser> getAllUser(){
-        List<QuizUser> users = (List<QuizUser>) db.findUserAll();
+        List<QuizUser> users = (List<QuizUser>) service.findUserAll();
         if(!users.isEmpty()){
-            return db.findUserAll();
+            return users;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User list is empty");
         }
     }
 
-    @GetMapping("/{userId}/passed_sets")
-    public Iterable<PassedSetLog> getUserPassedSets(@PathVariable long userId){
-        return db.findPassedSetsByUserId(userId);
-    }
-
     @PostMapping("/new")
     public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role, @RequestParam(value="password") String password){
-        Optional<QuizUser> existUserWithName = db.findUserByName(name);
+        Optional<QuizUser> existUserWithName = service.findUserByName(name);
         if(!existUserWithName.isPresent()){
             if(Role.isRolePresent(role)){
-                return db.saveUser(new QuizUser(name, password, role));
+                return service.saveUser(new QuizUser(name, password, role));
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role " + role + " does not exist");
             }
