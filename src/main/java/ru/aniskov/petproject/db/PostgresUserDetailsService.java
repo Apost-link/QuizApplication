@@ -12,6 +12,7 @@ import ru.aniskov.petproject.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PostgresUserDetailsService implements UserDetailsService {
@@ -25,14 +26,16 @@ public class PostgresUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QuizUser user = repository.findByName(username);
+        Optional<QuizUser> user = repository.findByName(username);
 
-        if(user == null) {
+        if(!user.isPresent()) {
             throw new UsernameNotFoundException("User not found");
         }
 
-        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
+        QuizUser quizUser = user.get();
 
-        return new User(user.getName(), user.getPassword(), authorities);
+        List<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(quizUser.getRole()));
+
+        return new User(quizUser.getName(), quizUser.getPassword(), authorities);
     }
 }

@@ -9,7 +9,9 @@ import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.DBFormer;
 import ru.aniskov.petproject.pojo.model.PassedSetLog;
 import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.pojo.model.Role;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,7 +39,12 @@ public class UserController {
 
     @GetMapping("/all")
     public Iterable<QuizUser> getAllUser(){
-        return db.findUserAll();
+        List<QuizUser> users = (List<QuizUser>) db.findUserAll();
+        if(!users.isEmpty()){
+            return db.findUserAll();
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User list is empty");
+        }
     }
 
     @GetMapping("/{userId}/passed_sets")
@@ -47,7 +54,16 @@ public class UserController {
 
     @PostMapping("/new")
     public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role, @RequestParam(value="password") String password){
-        return db.saveUser(new QuizUser(name, password, role));
+        Optional<QuizUser> existUserWithName = db.findUserByName(name);
+        if(!existUserWithName.isPresent()){
+            if(Role.isRolePresent(role)){
+                return db.saveUser(new QuizUser(name, password, role));
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role " + role + " does not exist");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with name " + name + " already exist");
+        }
     }
 
 }

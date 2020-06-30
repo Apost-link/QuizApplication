@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,8 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests().antMatchers("/api/v1/user/**").hasAnyAuthority(Role.ADMIN.getValue())
-                .and().authorizeRequests().antMatchers("/api/v1/quiz/**").authenticated()
-                .and().authorizeRequests().antMatchers("/api/v1/sets/**").authenticated()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/quiz/**").hasAnyAuthority(Role.ADMIN.getValue())
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/api/v1/quiz/**").authenticated()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/sets/**").hasAnyAuthority(Role.ADMIN.getValue())
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/api/v1/sets/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().disable();
     }

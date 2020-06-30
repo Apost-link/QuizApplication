@@ -19,6 +19,8 @@ public interface DBFormer {
 
     Optional<QuizUser> findUserById(long id);
 
+    Optional<QuizUser> findUserByName(String name);
+
     Iterable<QuizUser> findUserAll();
 
     QuizUser saveUser(QuizUser quizUser);

@@ -67,6 +67,11 @@ public class DBFormerImpl implements DBFormer{
     }
 
     @Override
+    public Optional<QuizUser> findUserByName(String name) {
+        return userRepository.findByName(name);
+    }
+
+    @Override
     public Iterable<QuizUser> findUserAll() {
         return userRepository.findAll();
     }

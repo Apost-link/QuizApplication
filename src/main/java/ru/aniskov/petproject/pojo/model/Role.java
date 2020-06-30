@@ -24,4 +24,9 @@ public enum Role {
 
         return null;
     }
+
+    public static boolean isRolePresent(String searchingRole){
+        Role result = getRole(searchingRole);
+        return result != null;
+    }
 }
