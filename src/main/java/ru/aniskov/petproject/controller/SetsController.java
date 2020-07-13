@@ -27,19 +27,24 @@ public class SetsController {
 
     @GetMapping("/set/{id}")
     public SetInfo getSetInfoById(@PathVariable long id) {
-        Optional<SetInfo> result = service.findSetInfo(id);
-        if (result.isPresent()) {
-            return result.get();
+        SetInfo result = service.findSetInfo(id);
+        if (result != null) {
+            return result;
         } else {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Bad parameters");
         }
     }
 
-//    @PostMapping("/passed/new")
-//    public PassedSetLog postNewPassedSet(@RequestParam(value = "userId") long userId, @RequestParam(value = "setId") long setId, @RequestParam(value = "correct_percent") int percent){
-//        PassedSetLog passedSetLog = new PassedSetLog(userId, setId, percent);
-//        return service.savePassedSetLog(passedSetLog);
-//    }
+    @PostMapping("/passed/new")
+    public PassedSetLog postNewPassedSet(@RequestParam(value = "userId") long userId, @RequestParam(value = "setId") long setId, @RequestParam(value = "correct_percent") int percent){
+        PassedSetLog passedSetLog = service.savePassedSetLog(new PassedSetLog(userId, setId, percent));
+        if(passedSetLog != null){
+            return passedSetLog;
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Bad parameters");
+        }
+    }
 
 }

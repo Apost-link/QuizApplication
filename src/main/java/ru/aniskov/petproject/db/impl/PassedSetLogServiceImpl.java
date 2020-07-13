@@ -20,4 +20,9 @@ public class PassedSetLogServiceImpl implements PassedSetLogService {
     public Iterable<PassedSetLog> findPassedSetsByUserId(long userId) {
         return repository.findAllByUserId(userId);
     }
+
+    @Override
+    public PassedSetLog savePassedSetLog(PassedSetLog passedSetLog) {
+        return repository.save(passedSetLog);
+    }
 }

@@ -63,10 +63,10 @@ class SetServiceImplTest {
         Mockito.when(quizService.findQuizById(1L)).thenReturn(new Quiz());
         Mockito.when(quizService.findQuizById(2L)).thenReturn(new Quiz());
 
-        SetService service = new SetServiceImpl(setRepository, quizService, colloquiumService);
+        SetService service = new SetServiceImpl(setRepository, quizService, colloquiumService, null);
 
-        Assert.assertEquals(result.get().getQuizList().size(), service.findSetInfo(1L).get().getQuizList().size());
-        Assert.assertEquals(result.get().getSet().getSetName(), service.findSetInfo(1L).get().getSet().getSetName());
+        Assert.assertEquals(result.get().getQuizList().size(), service.findSetInfo(1L).getQuizList().size());
+        Assert.assertEquals(result.get().getSet().getSetName(), service.findSetInfo(1L).getSet().getSetName());
     }
 
     @Test
@@ -74,7 +74,7 @@ class SetServiceImplTest {
         Mockito.when(setRepository.findById(Mockito.any())).thenReturn(Optional.empty());
         long generatedId = new Random().nextLong();
 
-        SetService service = new SetServiceImpl(setRepository, null, null);
+        SetService service = new SetServiceImpl(setRepository, null, null, null);
 
         Assert.assertNull(service.findSetInfo(generatedId));
     }

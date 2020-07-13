@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.db.repository.SetRepository;
 import ru.aniskov.petproject.db.service.ColloquiumService;
+import ru.aniskov.petproject.db.service.PassedSetLogService;
 import ru.aniskov.petproject.db.service.QuizService;
 import ru.aniskov.petproject.db.service.SetService;
 import ru.aniskov.petproject.pojo.SetInfo;
 import ru.aniskov.petproject.pojo.model.Colloquium;
+import ru.aniskov.petproject.pojo.model.PassedSetLog;
 import ru.aniskov.petproject.pojo.model.Quiz;
 import ru.aniskov.petproject.pojo.model.Set;
 
@@ -24,15 +26,18 @@ public class SetServiceImpl implements SetService {
 
     private ColloquiumService colloquiumService;
 
+    private PassedSetLogService passedSetLogService;
+
     @Autowired
-    public SetServiceImpl(SetRepository repository, QuizService quizService, ColloquiumService colloquiumService) {
+    public SetServiceImpl(SetRepository repository, QuizService quizService, ColloquiumService colloquiumService, PassedSetLogService passedSetLogService) {
         this.repository = repository;
         this.quizService = quizService;
         this.colloquiumService = colloquiumService;
+        this.passedSetLogService = passedSetLogService;
     }
 
     @Override
-    public Optional<SetInfo> findSetInfo(long setId) {
+    public SetInfo findSetInfo(long setId) {
         Optional<Set> set = repository.findById(setId);
         if(set.isPresent()){
             Iterable<Colloquium> colloquiums = colloquiumService.findColloquiumBySetId(setId);
@@ -43,7 +48,17 @@ public class SetServiceImpl implements SetService {
                     quizList.add(quiz);
                 }
             }
-            return Optional.of(new SetInfo(set.get(), quizList));
+            return new SetInfo(set.get(), quizList);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public PassedSetLog savePassedSetLog(PassedSetLog log) {
+        PassedSetLog result = passedSetLogService.savePassedSetLog(log);
+        if(result != null){
+            return result;
         } else {
             return null;
         }

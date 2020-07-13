@@ -49,13 +49,13 @@ public class UserController {
     public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role, @RequestParam(value="password") String password){
         QuizUser existUserWithName = service.findUserByName(name);
         if(existUserWithName != null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with name " + name + " already exist");
+        } else {
             if(Role.isRolePresent(role)){
                 return service.saveUser(new QuizUser(name, password, role));
             } else {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role " + role + " does not exist");
             }
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with name " + name + " already exist");
         }
     }
 
