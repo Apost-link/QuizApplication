@@ -25,8 +25,10 @@ public class SetServiceImpl implements SetService {
     private ColloquiumService colloquiumService;
 
     @Autowired
-    public SetServiceImpl(SetRepository repository){
+    public SetServiceImpl(SetRepository repository, QuizService quizService, ColloquiumService colloquiumService) {
         this.repository = repository;
+        this.quizService = quizService;
+        this.colloquiumService = colloquiumService;
     }
 
     @Override
@@ -36,8 +38,10 @@ public class SetServiceImpl implements SetService {
             Iterable<Colloquium> colloquiums = colloquiumService.findColloquiumBySetId(setId);
             List<Quiz> quizList = new LinkedList<>();
             for(Colloquium colloquium: colloquiums){
-                Optional<Quiz> quiz = quizService.findQuizById(colloquium.getQuizId());                                  //Todo: create join request instead of two select
-                quiz.ifPresent(quizList::add);
+                Quiz quiz = quizService.findQuizById(colloquium.getQuizId());                                  //Todo: create join request instead of two select
+                if(quiz != null){
+                    quizList.add(quiz);
+                }
             }
             return Optional.of(new SetInfo(set.get(), quizList));
         } else {

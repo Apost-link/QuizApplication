@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.stream.StreamSupport;
+
 @Component
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -27,18 +29,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Optional<QuizUser> findUserById(long id) {
-        return repository.findById(id);
+    public QuizUser findUserById(long id) {
+        Optional<QuizUser> result = repository.findById(id);
+        if(result.isPresent()){
+            return result.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public Optional<QuizUser> findUserByName(String name) {
-        return repository.findByName(name);
+    public QuizUser findUserByName(String name) {
+        Optional<QuizUser> result = repository.findByName(name);
+        if(result.isPresent()){
+            return result.get();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public Iterable<QuizUser> findUserAll() {
-        return repository.findAll();
+        Iterable<QuizUser> userList = repository.findAll();
+        if(StreamSupport.stream(userList.spliterator(), false).count() > 0){
+            return userList;
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.aniskov.petproject.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Quiz> getQuizById(@PathVariable long id) {
+    public Quiz getQuizById(@PathVariable long id) {
         return service.findQuizById(id);
     }
 

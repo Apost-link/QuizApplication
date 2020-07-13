@@ -24,8 +24,9 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Optional<Quiz> findQuizById(long id) {
-        return repository.findById(id);
+    public Quiz findQuizById(long id) {
+        Optional<Quiz> result = repository.findById(id);
+        return result.orElse(null);
     }
 
     @Override

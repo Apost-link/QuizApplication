@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface QuizService {
     Iterable<Quiz> findQuizAll();
 
-    Optional<Quiz> findQuizById(long id);
+    Quiz findQuizById(long id);
 
     Iterable<Quiz> findQuizByCategory(long category);
 

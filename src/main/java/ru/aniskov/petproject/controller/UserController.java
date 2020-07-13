@@ -11,7 +11,6 @@ import ru.aniskov.petproject.pojo.model.QuizUser;
 import ru.aniskov.petproject.pojo.model.Role;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "${v1API}/user")
@@ -27,9 +26,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<QuizUser> getUser(@PathVariable long id){
-        Optional<QuizUser> user = service.findUserById(id);
-        if(user.isPresent()){
+    public QuizUser getUser(@PathVariable long id){
+        QuizUser user = service.findUserById(id);
+        if(user != null){
             return user;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with id = " + id + " not found");
@@ -48,8 +47,8 @@ public class UserController {
 
     @PostMapping("/new")
     public QuizUser postUser(@RequestParam(value="name") String name , @RequestParam(value="role") String role, @RequestParam(value="password") String password){
-        Optional<QuizUser> existUserWithName = service.findUserByName(name);
-        if(!existUserWithName.isPresent()){
+        QuizUser existUserWithName = service.findUserByName(name);
+        if(existUserWithName != null){
             if(Role.isRolePresent(role)){
                 return service.saveUser(new QuizUser(name, password, role));
             } else {
