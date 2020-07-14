@@ -15,6 +15,7 @@ import ru.aniskov.petproject.db.service.UserService;
 import ru.aniskov.petproject.pojo.model.QuizUser;
 import ru.aniskov.petproject.pojo.model.Role;
 
+import java.security.Principal;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -85,6 +86,28 @@ class UserControllerTest {
         UserController controller = new UserController(userService);
         Throwable exception = assertThrows(ResponseStatusException.class, () -> controller.postUser("name", "some_str", "pass"));
         assertEquals("400 BAD_REQUEST \"Role some_str does not exist\"", exception.getMessage());
+    }
+
+    @Test
+    void test_getUserProfile_withExistedName_thenReturnProfile(){
+        QuizUser result = new QuizUser();
+        Mockito.when(userService.findUserByName("testName")).thenReturn(result);
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("testName");
+
+        UserController controller = new UserController(userService);
+        assertEquals(controller.getUserProfile(principal), result);
+    }
+
+    @Test
+    void test_getUserProfile_withUnExistedName_thenReturnExc(){
+        Mockito.doReturn(null).when(userService).findUserByName(Mockito.anyString());
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("testName");
+
+        UserController controller = new UserController(userService);
+        Throwable exception = assertThrows(ResponseStatusException.class, () -> controller.getUserProfile(principal));
+        assertEquals("400 BAD_REQUEST \"User with name testName does not exist\"", exception.getMessage());
     }
 
     @After

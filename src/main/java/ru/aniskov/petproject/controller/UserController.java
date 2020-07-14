@@ -4,12 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.service.UserService;
 import ru.aniskov.petproject.pojo.model.QuizUser;
 import ru.aniskov.petproject.pojo.model.Role;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,17 @@ public class UserController {
             return users;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User list is empty");
+        }
+    }
+
+    @GetMapping("/profile")
+    public QuizUser getUserProfile(@AuthenticationPrincipal final Principal user){
+        String userName = user.getName();
+        QuizUser result = service.findUserByName(userName);
+        if(result != null){
+            return result;                                                                                              //todo: В будущем выводить не QuizUser, а некое саммари
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with name " + userName + " does not exist");
         }
     }
 
