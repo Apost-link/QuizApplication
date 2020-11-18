@@ -27,4 +27,3 @@ hs_err_pid*
 /out/*
 /src/main/resources/rebel.xml
 /src/test/resources/application-test.properties
-/src/main/resources/application.properties
