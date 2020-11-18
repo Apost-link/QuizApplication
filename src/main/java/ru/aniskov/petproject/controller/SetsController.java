@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.service.SetService;
 import ru.aniskov.petproject.pojo.SetInfo;
-import ru.aniskov.petproject.pojo.model.PassedSetLog;
-
-import java.util.Optional;
+import ru.aniskov.petproject.db.model.PassedSetLog;
 
 @RestController
 @RequestMapping(path = "${v1API}/sets")

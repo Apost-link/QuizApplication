@@ -1,6 +1,6 @@
 package ru.aniskov.petproject.db.service;
 
-import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.db.model.QuizUser;
 
 public interface UserService {
 

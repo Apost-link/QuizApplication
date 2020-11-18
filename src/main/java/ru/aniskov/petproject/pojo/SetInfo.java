@@ -1,32 +1,18 @@
 package ru.aniskov.petproject.pojo;
 
-import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.model.Set;
+import lombok.Data;
+import ru.aniskov.petproject.db.model.Quiz;
+import ru.aniskov.petproject.db.model.QuizSet;
 
-import java.util.List;
+import java.util.Collection;
 
+@Data
 public class SetInfo {
-    private Set set;
-    private List<Quiz> quizList;
+    private QuizSet quizSet;
+    private Collection<Quiz> quizList;
 
-    public SetInfo(Set set, List<Quiz> quizList) {
-        this.set = set;
-        this.quizList = quizList;
-    }
-
-    public Set getSet() {
-        return set;
-    }
-
-    public void setSet(Set set) {
-        this.set = set;
-    }
-
-    public List<Quiz> getQuizList() {
-        return quizList;
-    }
-
-    public void setColloquiumList(List<Quiz> quizList) {
+    public SetInfo(QuizSet quizSet, Collection<Quiz> quizList) {
+        this.quizSet = quizSet;
         this.quizList = quizList;
     }
 }

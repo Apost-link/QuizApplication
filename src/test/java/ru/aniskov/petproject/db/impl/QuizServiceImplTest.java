@@ -2,7 +2,6 @@ package ru.aniskov.petproject.db.impl;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.aniskov.petproject.db.repository.QuizRepository;
 import ru.aniskov.petproject.db.service.QuizService;
-import ru.aniskov.petproject.pojo.model.Quiz;
+import ru.aniskov.petproject.db.model.Quiz;
 
 import java.util.LinkedList;
 import java.util.List;

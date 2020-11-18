@@ -7,12 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.service.QuizService;
-import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.db.model.Quiz;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping(path = "${v1API}/quiz")
 public class QuizController {
 

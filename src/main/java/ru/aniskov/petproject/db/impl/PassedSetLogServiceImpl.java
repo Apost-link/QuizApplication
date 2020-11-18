@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.db.repository.PassedSetLogRepository;
 import ru.aniskov.petproject.db.service.PassedSetLogService;
-import ru.aniskov.petproject.pojo.model.PassedSetLog;
+import ru.aniskov.petproject.db.model.PassedSetLog;
 
 @Component
 public class PassedSetLogServiceImpl implements PassedSetLogService {

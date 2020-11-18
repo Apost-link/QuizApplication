@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.db.repository.ColloquiumRepository;
 import ru.aniskov.petproject.db.service.ColloquiumService;
-import ru.aniskov.petproject.pojo.model.Colloquium;
+import ru.aniskov.petproject.db.model.Colloquium;
 
 @Component
 public class ColloquiumServiceImpl implements ColloquiumService {

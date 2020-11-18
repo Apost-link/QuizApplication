@@ -8,14 +8,12 @@ import ru.aniskov.petproject.db.service.PassedSetLogService;
 import ru.aniskov.petproject.db.service.QuizService;
 import ru.aniskov.petproject.db.service.SetService;
 import ru.aniskov.petproject.pojo.SetInfo;
-import ru.aniskov.petproject.pojo.model.Colloquium;
-import ru.aniskov.petproject.pojo.model.PassedSetLog;
-import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.model.Set;
+import ru.aniskov.petproject.db.model.Colloquium;
+import ru.aniskov.petproject.db.model.PassedSetLog;
+import ru.aniskov.petproject.db.model.Quiz;
+import ru.aniskov.petproject.db.model.QuizSet;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class SetServiceImpl implements SetService {
@@ -38,10 +36,10 @@ public class SetServiceImpl implements SetService {
 
     @Override
     public SetInfo findSetInfo(long setId) {
-        Optional<Set> set = repository.findById(setId);
+        Optional<QuizSet> set = repository.findById(setId);
         if(set.isPresent()){
             Iterable<Colloquium> colloquiums = colloquiumService.findColloquiumBySetId(setId);
-            List<Quiz> quizList = new LinkedList<>();
+            Collection<Quiz> quizList = new PriorityQueue<>();
             for(Colloquium colloquium: colloquiums){
                 Quiz quiz = quizService.findQuizById(colloquium.getQuizId());                                  //Todo: create join request instead of two select
                 if(quiz != null){

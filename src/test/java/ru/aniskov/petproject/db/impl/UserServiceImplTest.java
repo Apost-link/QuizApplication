@@ -2,7 +2,6 @@ package ru.aniskov.petproject.db.impl;
 
 import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.aniskov.petproject.db.repository.UserRepository;
 import ru.aniskov.petproject.db.service.UserService;
-import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.db.model.QuizUser;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -8,15 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.db.service.UserService;
-import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.db.model.QuizUser;
 import ru.aniskov.petproject.db.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import java.util.stream.StreamSupport;
 
 @Component
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -51,11 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Iterable<QuizUser> findUserAll() {
         Iterable<QuizUser> userList = repository.findAll();
-        if(StreamSupport.stream(userList.spliterator(), false).count() > 0){
-            return userList;
-        } else {
-            return null;
-        }
+        return userList.iterator().hasNext() ? userList : null;
     }
 
     @Override

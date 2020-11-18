@@ -1,11 +1,14 @@
-package ru.aniskov.petproject.pojo.model;
+package ru.aniskov.petproject.db.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import ru.aniskov.petproject.pojo.model.Role;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 public class QuizUser {
 
     @Id
@@ -37,45 +40,5 @@ public class QuizUser {
         this.name = name;
         this.password = password;
         this.role = Role.getRole(role).getValue();
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Date getRegistrerDate() {
-        return registrerDate;
-    }
-
-    public void setRegistrerDate(Date registrerDate) {
-        this.registrerDate = registrerDate;
     }
 }

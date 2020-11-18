@@ -1,8 +1,11 @@
-package ru.aniskov.petproject.pojo.model;
+package ru.aniskov.petproject.db.model;
+
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Category {
 
     @Id
@@ -16,22 +19,6 @@ public class Category {
     }
 
     public Category(String title) {
-        this.title = title;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
     }
 }

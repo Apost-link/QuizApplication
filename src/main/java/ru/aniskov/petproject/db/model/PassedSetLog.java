@@ -1,9 +1,12 @@
-package ru.aniskov.petproject.pojo.model;
+package ru.aniskov.petproject.db.model;
+
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Data
 public class PassedSetLog {
 
     @Id
@@ -35,46 +38,6 @@ public class PassedSetLog {
         this.userId = userId;
         this.setId = setId;
         this.correctPercent = correctPercent;
-        this.date = date;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public long getSetId() {
-        return setId;
-    }
-
-    public void setSetId(long setId) {
-        this.setId = setId;
-    }
-
-    public int getCorrectPercent() {
-        return correctPercent;
-    }
-
-    public void setCorrectPercent(int correctPercent) {
-        this.correctPercent = correctPercent;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
         this.date = date;
     }
 }

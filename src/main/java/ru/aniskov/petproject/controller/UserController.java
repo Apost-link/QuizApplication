@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.service.UserService;
-import ru.aniskov.petproject.pojo.model.QuizUser;
+import ru.aniskov.petproject.db.model.QuizUser;
 import ru.aniskov.petproject.pojo.model.Role;
 
 import java.security.Principal;

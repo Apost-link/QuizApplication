@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 import ru.aniskov.petproject.db.service.QuizService;
-import ru.aniskov.petproject.pojo.model.Quiz;
+import ru.aniskov.petproject.db.model.Quiz;
 
 import java.util.LinkedList;
 import java.util.List;

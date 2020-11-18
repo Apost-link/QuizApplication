@@ -16,9 +16,9 @@ import ru.aniskov.petproject.db.service.ColloquiumService;
 import ru.aniskov.petproject.db.service.QuizService;
 import ru.aniskov.petproject.db.service.SetService;
 import ru.aniskov.petproject.pojo.SetInfo;
-import ru.aniskov.petproject.pojo.model.Colloquium;
-import ru.aniskov.petproject.pojo.model.Quiz;
-import ru.aniskov.petproject.pojo.model.Set;
+import ru.aniskov.petproject.db.model.Colloquium;
+import ru.aniskov.petproject.db.model.Quiz;
+import ru.aniskov.petproject.db.model.QuizSet;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.Random;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ComponentScan("ru.aniskov.petproject.db")
-class SetServiceImplTest {
+class QuizSetServiceImplTest {
 
     MockitoSession session;
 
@@ -54,11 +54,11 @@ class SetServiceImplTest {
         List<Quiz> resultQuizList = new LinkedList<>();
         resultQuizList.add(new Quiz());
         resultQuizList.add(new Quiz());
-        Optional<SetInfo> result = Optional.of(new SetInfo(new Set("NewSetName"), resultQuizList));
+        Optional<SetInfo> result = Optional.of(new SetInfo(new QuizSet("NewSetName"), resultQuizList));
         List<Colloquium> colloquiums = new LinkedList<>();
         colloquiums.add(new Colloquium(1L,1L));
         colloquiums.add(new Colloquium(2L,2L));
-        Mockito.when(setRepository.findById(1L)).thenReturn(Optional.of(new Set("NewSetName")));
+        Mockito.when(setRepository.findById(1L)).thenReturn(Optional.of(new QuizSet("NewSetName")));
         Mockito.when(colloquiumService.findColloquiumBySetId(1L)).thenReturn(colloquiums);
         Mockito.when(quizService.findQuizById(1L)).thenReturn(new Quiz());
         Mockito.when(quizService.findQuizById(2L)).thenReturn(new Quiz());
@@ -66,7 +66,7 @@ class SetServiceImplTest {
         SetService service = new SetServiceImpl(setRepository, quizService, colloquiumService, null);
 
         Assert.assertEquals(result.get().getQuizList().size(), service.findSetInfo(1L).getQuizList().size());
-        Assert.assertEquals(result.get().getSet().getSetName(), service.findSetInfo(1L).getSet().getSetName());
+        Assert.assertEquals(result.get().getQuizSet().getSetName(), service.findSetInfo(1L).getQuizSet().getSetName());
     }
 
     @Test

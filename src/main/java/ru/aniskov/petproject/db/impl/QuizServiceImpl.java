@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.aniskov.petproject.db.repository.QuizRepository;
 import ru.aniskov.petproject.db.service.QuizService;
-import ru.aniskov.petproject.pojo.model.Quiz;
+import ru.aniskov.petproject.db.model.Quiz;
 
 import java.util.Optional;
 

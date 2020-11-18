@@ -53,8 +53,4 @@
         <appender-ref ref="Console" />
     </root>
 
-    <logger name="ru.aniskov" level="debug" additivity="false">
-        <appender-ref ref="DebugLogFileAppender"/>
-    </logger>
-
 </configuration>

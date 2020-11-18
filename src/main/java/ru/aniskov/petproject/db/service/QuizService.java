@@ -1,8 +1,6 @@
 package ru.aniskov.petproject.db.service;
 
-import ru.aniskov.petproject.pojo.model.Quiz;
-
-import java.util.Optional;
+import ru.aniskov.petproject.db.model.Quiz;
 
 public interface QuizService {
     Iterable<Quiz> findQuizAll();

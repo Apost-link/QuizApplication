@@ -1,6 +1,6 @@
 package ru.aniskov.petproject.db.service;
 
-import ru.aniskov.petproject.pojo.model.Colloquium;
+import ru.aniskov.petproject.db.model.Colloquium;
 
 public interface ColloquiumService {
 

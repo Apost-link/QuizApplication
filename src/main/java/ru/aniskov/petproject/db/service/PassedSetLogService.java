@@ -1,6 +1,6 @@
 package ru.aniskov.petproject.db.service;
 
-import ru.aniskov.petproject.pojo.model.PassedSetLog;
+import ru.aniskov.petproject.db.model.PassedSetLog;
 
 public interface PassedSetLogService {
     Iterable<PassedSetLog> findPassedSetsByUserId(long userId);
